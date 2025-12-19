@@ -6,6 +6,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	UNUSED(hPrevInstance);
 	UNUSED(pCmdLine);
 
-	CApp app;
-	return app.Main(hInstance, nCmdShow);
+	return CApp().Main(hInstance, nCmdShow);
 }

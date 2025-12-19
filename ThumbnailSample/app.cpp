@@ -21,10 +21,10 @@ int CApp::Main(HINSTANCE hInstance, int nCmdShow)
 	VERIFY(SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)));
 
 	if (!RegisterWndClass())
-		return NULL;
+		return 0;
 
 	if (!CreateMainWnd(nCmdShow))
-		return NULL;
+		return 0;
 
 	MSG msg = {};
 	BOOL bResult = 0;
