@@ -179,9 +179,10 @@ public:
 		return &m_pInterface;
 	}
 
-	void **GetVoidPtr()
+	template<typename U>
+	U **GetPtr()
 	{
-		return reinterpret_cast<void**>(&m_pInterface);
+		return reinterpret_cast<U**>(&m_pInterface);
 	}
 
 	T *ReleaseOwnership()
@@ -370,7 +371,7 @@ inline HBITMAP WICIconToBitmap(IImageList *pImageList, int nIndex, uint32_t nWid
 
 	CScopedInterface<IWICImagingFactory> imaging_factory;
 	if (FAILED(CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,
-		IID_IWICImagingFactory, imaging_factory.GetVoidPtr())))
+		IID_IWICImagingFactory, imaging_factory.GetPtr<void>())))
 		return NULL;
 
 	CScopedInterface<IWICBitmap> wic_bitmap;
@@ -384,7 +385,7 @@ inline HBITMAP WICScaleBitmap(HBITMAP hBitmap, uint32_t nWidth, uint32_t nHeight
 {
 	CScopedInterface<IWICImagingFactory> imaging_factory;
 	if (FAILED(CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,
-		IID_IWICImagingFactory, imaging_factory.GetVoidPtr())))
+		IID_IWICImagingFactory, imaging_factory.GetPtr<void>())))
 		return NULL;
 
 	CScopedInterface<IWICBitmap> wic_bitmap;

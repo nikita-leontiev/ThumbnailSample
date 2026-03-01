@@ -330,7 +330,7 @@ HBITMAP CApp::GetThumbnail(const std::wstring & sPath, int nIconIndex, uint32_t 
 
 	CScopedInterface<IShellFolder> parent;
 	PCUITEMID_CHILD child_pidl = NULL; // Should not be freed, because it's part of pidl
-	if (FAILED(SHBindToParent(pidl.Get(), IID_IShellFolder, parent.GetVoidPtr(), &child_pidl)))
+	if (FAILED(SHBindToParent(pidl.Get(), IID_IShellFolder, parent.GetPtr<void>(), &child_pidl)))
 		return NULL;
 
 	HBITMAP hThumbnail = NULL;
@@ -353,7 +353,7 @@ HBITMAP CApp::IShellItemImageFactory_GetThumbnail(IShellFolder *pParent, PCUITEM
 	if (FAILED(SHCreateShellItem(NULL, pParent, child_pidl, shell_item.GetPtr())))
 		return NULL;
 	CScopedInterface<IShellItemImageFactory> image_factory;
-	if (FAILED(shell_item -> QueryInterface(IID_IShellItemImageFactory, image_factory.GetVoidPtr())))
+	if (FAILED(shell_item -> QueryInterface(IID_IShellItemImageFactory, image_factory.GetPtr<void>())))
 		return NULL;
 	SIZE size = {nSize, nSize};
 	HBITMAP hImage = NULL;
@@ -369,7 +369,7 @@ HBITMAP CApp::IThumbnailProvider_GetThumbnail(IShellFolder *pParent, PCUITEMID_C
 	IExtractImage can't return RAW previews. */
 	CScopedInterface<IThumbnailProvider> thumbnail_provider;
 	if (FAILED(pParent -> GetUIObjectOf(NULL, 1, &child_pidl, IID_IThumbnailProvider, NULL,
-		thumbnail_provider.GetVoidPtr())))
+		thumbnail_provider.GetPtr<void>())))
 		return NULL;
 	HBITMAP hThumbnail = NULL;
 	WTS_ALPHATYPE alpha = WTSAT_ARGB;
@@ -382,7 +382,7 @@ HBITMAP CApp::IExtractImage_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD 
 {
 	// IExtractImage can return only thumbnail. If thumbnail is not available, IExtractImage::Extract fails.
 	CScopedInterface<IExtractImage> extract_image;
-	if (FAILED(pParent -> GetUIObjectOf(NULL, 1, &child_pidl, IID_IExtractImage, NULL, extract_image.GetVoidPtr())))
+	if (FAILED(pParent -> GetUIObjectOf(NULL, 1, &child_pidl, IID_IExtractImage, NULL, extract_image.GetPtr<void>())))
 		return NULL;
 	const DWORD dwBufferSize = MAX_PATH;
 	wchar_t sBuffer[dwBufferSize];
@@ -401,7 +401,7 @@ HBITMAP CApp::IExtractImage_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD 
 HBITMAP CApp::IconToBitmap(int nIconIndex, uint32_t nSize)
 {
 	CScopedInterface<IImageList> image_list;
-	VERIFY(SUCCEEDED(SHGetImageList(4, IID_IImageList, image_list.GetVoidPtr())));
+	VERIFY(SUCCEEDED(SHGetImageList(4, IID_IImageList, image_list.GetPtr<void>())));
 
 	if (m_get_icon_wic_scale_radio_button.IsChecked())
 		return WICIconToBitmap(image_list.Get(), nIconIndex, nSize, nSize);
