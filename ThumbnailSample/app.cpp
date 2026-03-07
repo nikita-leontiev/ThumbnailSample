@@ -41,7 +41,7 @@ int CApp::Main(HINSTANCE hInstance, int nCmdShow)
 	return static_cast<int>(msg.wParam);
 }
 
-ATOM CApp::RegisterWndClass()
+ATOM CApp::RegisterWndClass() const
 {
 	WNDCLASS wndClass = {};
 	wndClass.style = CS_DBLCLKS;

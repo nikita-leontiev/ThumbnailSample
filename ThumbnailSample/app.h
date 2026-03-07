@@ -29,7 +29,7 @@ public:
 	CApp();
 
 	int Main(HINSTANCE hInstance, int nCmdShow);
-	ATOM RegisterWndClass();
+	ATOM RegisterWndClass() const;
 	bool CreateMainWnd(int nCmdShow);
 	BOOL OnCreate(HWND hWnd, LPCREATESTRUCT lpCreateStruct);
 	void OnDestroy(HWND hWnd);
@@ -42,9 +42,10 @@ public:
 	void DrawThumbnail(NMLVCUSTOMDRAW *pNMLVCD);
 	void ListDirectory(const std::wstring & sPath);
 	HBITMAP GetThumbnail(const std::wstring & sPath, int nIconIndex, uint32_t nSize);
-	HBITMAP IShellItemImageFactory_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl, uint32_t nSize);
-	HBITMAP IThumbnailProvider_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl, uint32_t nSize);
-	HBITMAP IExtractImage_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl, uint32_t nSize);
+	static HBITMAP IShellItemImageFactory_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl,
+		uint32_t nSize);
+	static HBITMAP IThumbnailProvider_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl, uint32_t nSize);
+	static HBITMAP IExtractImage_GetThumbnail(IShellFolder *pParent, PCUITEMID_CHILD child_pidl, uint32_t nSize);
 	HBITMAP IconToBitmap(int nIconIndex, uint32_t nSize);
 	void ClearItems();
 	static LRESULT CALLBACK MainWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
